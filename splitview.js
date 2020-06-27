@@ -1,145 +1,5 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>layouts 4</title>
-    <link rel="stylesheet" href="CoCreate.min.css" type="text/css" />
-</head>
-
- <style type="text/css">
-    .sbRow {
-        display: flex;
-        flex-grow: 1;
-        flex-flow: row nowrap;
-    }
-
-    .sbColumn {
-        display: flex;
-        flex-grow: 1;
-        flex-flow: column nowrap;
-    }
-    
-    .sbPanel{
-        overflow:hidden;
-        height:100%;
-    }
-
-
-    /*.sbSplitter {*/
-    /*    flex-grow: 0;*/
-    /*    background-color: #C0C0C0;*/
-    /*}*/
-
-    .sbSplitter:hover {
-        background-color: #E0E0E0;
-    }
-
-    .sbHorizontal {
-        min-width: 100%;
-        min-height: 8px;
-        cursor: row-resize;
-    }
-
-    .sbVertical {
-        min-width: 8px;
-        min-height: 100%;
-        cursor: col-resize;
-    }
-    .sbHorizontal.sbSplitter {
-        min-width: 100%;
-        min-height: 8px;
-        max-height:8px;
-        cursor: row-resize;
-        background-color: #C0C0C0;
-
-    }
-
-    .sbVertical.sbSplitter {
-        min-width: 8px;
-        max-width: 8px;
-        min-height: 100%;
-        cursor: col-resize;
-        background-color: #C0C0C0;
-    }
-@media only screen and (max-width: 768px) {
-    .showonly{
-        min-width: calc(100% - 8px);
-    }
-    
-}
-</style>
-<style type="text/css">
-    body {
-        display: flex;
-        flex-flow: column nowrap;
-        height: 100vh;
-        max-height: 100vh;
-    }
-
-</style>
-
-<body>
-
-    <div class="container sbColumn overflow-hidden card border-radius-2px width-auto margin-15px height-50-percent">
-        <div class="sbRow height-50-percent">
-            
-            <div class="sbColumn showonly">
-                <div class="sbPanel">
-                    <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
-                        concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur
-                        eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae
-                        voluptatibus.</p>
-                        T
-                </div>
-            </div>
-            <div class="sbSplitter sbVertical"> </div>
-
-            <div class="sbColumn">
-                <div class="sbPanel">
-                    <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
-                    concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur
-                    eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae
-                    voluptatibus.</p>
-                    U
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <div class="container sbColumn overflow-hidden card border-radius-2px width-auto margin-15px height-50-percent">
-        <div class="sbRow height-50-percent">
-            
-            <div class="sbColumn showonly">
-                <div class="sbPanel">
-                    <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
-                        concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur
-                        eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae
-                        voluptatibus.</p>
-                        T
-                </div>
-            </div>
-            <div class="sbSplitter sbVertical"> </div>
-
-            <div class="sbColumn">
-                <div class="sbPanel">
-                    <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
-                    concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur
-                    eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae
-                    voluptatibus.</p>
-                    U
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-</body>
-
-<script type="text/javascript">
-
-var splitterHorizontalArray = document.getElementsByClassName("sbSplitter sbHorizontal");
-var splitterVerticalArray = document.getElementsByClassName("sbSplitter sbVertical");
+var splitterHorizontalArray = document.getElementsByClassName("svSplitter svHorizontal");
+var splitterVerticalArray = document.getElementsByClassName("svSplitter svVertical");
 
 for (let i = 0; i < splitterHorizontalArray.length; i++) {
     splitterHorizontalArray[i].addEventListener('mousedown', initDragHorizontal, false);
@@ -155,8 +15,8 @@ var thisSplitter, myFamily, myPosition, myAboveDiv, myBelowDiv,
     startTouchY, startHeightAbove, startHeightBelow, startWidthLeft, 
     startWidthRight,startWindowWidth,beforeScreenResizeWidthLeft,
     beforeScreenResizeWidthRight,totalWidth,totalHeight,totalDiv,
-    sbColumnDivArr,sbColumnDivWidthArray,
-    sbPanelDivArr, sbPanelDivHeightArr,
+    svColumnDivArr,svColumnDivWidthArray,
+    svPanelDivArr, svPanelDivHeightArr,
     containerDiv,containerDivWidth, containerDivHeight,
     minMoveLimit, maxMoveLimit,
     mySplitterFamily,mySplitterPosition,restSplitterBelowHeight,restSplitterAboveHeight,restSplitterRightWidth,restSplitterleftWidth;
@@ -169,18 +29,18 @@ function initDragHorizontal(e) {
     for (let i = 0; i < e.path[1].children.length; i++) {
         myFamily.push(e.path[1].children[i]);
     }
-    sbPanelDivArr = [];
+    svPanelDivArr = [];
     myFamily.forEach(family => {
-        if(family.classList.contains("sbPanel"))
-            sbPanelDivArr.push(family);
+        if(family.classList.contains("svPanel"))
+            svPanelDivArr.push(family);
     });
     
-    sbPanelDivHeightArr = [];
-    sbPanelDivArr.forEach(panel => {
-        sbPanelDivHeightArr.push(parseInt(document.defaultView.getComputedStyle(panel).height,10));
+    svPanelDivHeightArr = [];
+    svPanelDivArr.forEach(panel => {
+        svPanelDivHeightArr.push(parseInt(document.defaultView.getComputedStyle(panel).height,10));
     });
-    for(let i=0; i<sbPanelDivArr.length;i++){
-        sbPanelDivArr[i].style.minHeight = sbPanelDivHeightArr[i]*100/totalHeight + '%';
+    for(let i=0; i<svPanelDivArr.length;i++){
+        svPanelDivArr[i].style.minHeight = svPanelDivHeightArr[i]*100/totalHeight + '%';
     }
     e.path.forEach(element => {
         if(element.classList && element.classList.contains("container"))
@@ -194,13 +54,15 @@ function initDragHorizontal(e) {
     
     mySplitterFamily = []; 
     myFamily.forEach(family => {
-        if(family.classList.contains("sbSplitter") && family.classList.contains("sbHorizontal"))
+        if(family.classList.contains("svSplitter") && family.classList.contains("svHorizontal"))
             mySplitterFamily.push(family);
     });
     mySplitterPosition = mySplitterFamily.indexOf(thisSplitter);
-    restSplitterBelowHeight = parseInt(document.defaultView.getComputedStyle(thisSplitter).height,10)*(mySplitterFamily.length-mySplitterPosition)+parseInt(document.defaultView.getComputedStyle(thisSplitter).height,10)/2;
-    restSplitterAboveHeight = parseInt(document.defaultView.getComputedStyle(thisSplitter).height,10)*(mySplitterPosition)+parseInt(document.defaultView.getComputedStyle(thisSplitter).height,10)/2;
+    // restSplitterBelowHeight = parseInt(document.defaultView.getComputedStyle(thisSplitter).height,10)*(mySplitterFamily.length-mySplitterPosition)+parseInt(document.defaultView.getComputedStyle(thisSplitter).height,10)/2;
+    // restSplitterAboveHeight = parseInt(document.defaultView.getComputedStyle(thisSplitter).height,10)*(mySplitterPosition)+parseInt(document.defaultView.getComputedStyle(thisSplitter).height,10)/2;
     
+    restSplitterBelowHeight = parseInt(document.defaultView.getComputedStyle(thisSplitter).height,10)*(mySplitterFamily.length-mySplitterPosition-1);
+    restSplitterAboveHeight = parseInt(document.defaultView.getComputedStyle(thisSplitter).height,10)*(mySplitterPosition);
     if (e.type == "mousedown")
         startMouseY = e.clientY;
     if (e.type == "touchstart")
@@ -226,8 +88,8 @@ function doDragHorizontal(e) {
         myAboveDiv.style.minHeight = (startHeightAbove + e.touches[0].clientY - startTouchY)*100/(totalHeight) + '%';
         myBelowDiv.style.minHeight = (startHeightBelow - e.touches[0].clientY + startTouchY)*100/(totalHeight) + '%';
     }
-    // myAboveDiv.classList.remove("sbPanel")
-    // myBelowDiv.classList.remove("sbPanel")
+    // myAboveDiv.classList.remove("svPanel")
+    // myBelowDiv.classList.remove("svPanel")
 }
 function stopDragHorizontal(e) {
     document.documentElement.removeEventListener('mousemove', doDragHorizontal, false);
@@ -248,26 +110,26 @@ function initDragVertical(e) {
     for (let i = 0; i < e.path[1].children.length; i++) {
         myFamily.push(e.path[1].children[i]);
     }
-    sbColumnDivArr = [];
+    svColumnDivArr = [];
     myFamily.forEach(family => 
         {
-            if(family.classList.contains("sbColumn")){
-                sbColumnDivArr.push(family);
+            if(family.classList.contains("svColumn")){
+                svColumnDivArr.push(family);
             }
         }
     );
     
-    sbColumnDivWidthArray = [];
-    sbColumnDivArr.forEach(sbColumnDiv => {
-        sbColumnDivWidthArray.push(parseInt(document.defaultView.getComputedStyle(sbColumnDiv).width, 10));
+    svColumnDivWidthArray = [];
+    svColumnDivArr.forEach(svColumnDiv => {
+        svColumnDivWidthArray.push(parseInt(document.defaultView.getComputedStyle(svColumnDiv).width, 10));
     });
     
-    for(let i=0; i<sbColumnDivArr.length;i++){
-        sbColumnDivArr[i].style.minWidth = sbColumnDivWidthArray[i]*100/totalWidth + '%';
+    for(let i=0; i<svColumnDivArr.length;i++){
+        svColumnDivArr[i].style.minWidth = svColumnDivWidthArray[i]*100/totalWidth + '%';
     }
     
     e.path.forEach(element =>{
-        if(element.classList && element.classList.contains("sbColumn"))
+        if(element.classList && element.classList.contains("svColumn"))
             containerDiv = element;
     });
     containerDivWidth = parseInt(document.defaultView.getComputedStyle(containerDiv).width,10);
@@ -277,12 +139,15 @@ function initDragVertical(e) {
     
     mySplitterFamily = []; 
     myFamily.forEach(family => {
-        if(family.classList.contains("sbSplitter") && family.classList.contains("sbVertical"))
+        if(family.classList.contains("svSplitter") && family.classList.contains("svVertical"))
             mySplitterFamily.push(family);
     });
     mySplitterPosition = mySplitterFamily.indexOf(thisSplitter);
-    restSplitterRightWidth = parseInt(document.defaultView.getComputedStyle(thisSplitter).width,10)*(mySplitterFamily.length-mySplitterPosition)+parseInt(document.defaultView.getComputedStyle(thisSplitter).width,10)/2;
-    restSplitterleftWidth = parseInt(document.defaultView.getComputedStyle(thisSplitter).width,10)*(mySplitterPosition)+parseInt(document.defaultView.getComputedStyle(thisSplitter).width,10)/2;
+    // restSplitterRightWidth = parseInt(document.defaultView.getComputedStyle(thisSplitter).width,10)*(mySplitterFamily.length-mySplitterPosition)+parseInt(document.defaultView.getComputedStyle(thisSplitter).width,10)/2;
+    // restSplitterleftWidth = parseInt(document.defaultView.getComputedStyle(thisSplitter).width,10)*(mySplitterPosition)+parseInt(document.defaultView.getComputedStyle(thisSplitter).width,10)/2;
+    
+    restSplitterRightWidth = parseInt(document.defaultView.getComputedStyle(thisSplitter).width,10)*(mySplitterFamily.length-mySplitterPosition-1);
+    restSplitterleftWidth = parseInt(document.defaultView.getComputedStyle(thisSplitter).width,10)*(mySplitterPosition);
     
     if (e.type == "mousedown")
         startMouseX = e.clientX;
@@ -323,8 +188,8 @@ function doDragVertical(e) {
         if(window.innerWidth > startWindowWidth)
             myLeftDiv.style.width = (beforeScreenResizeWidthRight + (window.innerWidth - startWindowWidth))*100/totalWidth + '%';
     }
-    // myLeftDiv.classList.remove("sbPanel")
-    // myRightDiv.classList.remove("sbPanel")
+    // myLeftDiv.classList.remove("svPanel")
+    // myRightDiv.classList.remove("svPanel")
 
 }
 function stopDragVertical(e) {
@@ -333,9 +198,3 @@ function stopDragVertical(e) {
     document.documentElement.removeEventListener('touchmove', doDragVertical, false);
     document.documentElement.removeEventListener('touchend', stopDragVertical, false);
 }
-
-</script>
-
-</html>
-
-    
