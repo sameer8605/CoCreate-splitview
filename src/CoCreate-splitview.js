@@ -1,3 +1,4 @@
+
 var splitterHorizontalArray = document.getElementsByClassName("svSplitter svHorizontal");
 var splitterVerticalArray = document.getElementsByClassName("svSplitter svVertical");
 
@@ -23,8 +24,10 @@ var thisSplitter, myFamily, myPosition, myAboveDiv, myBelowDiv,
     
 //////////////////////////////// Horizontal Resizing ////////////////////////
 function initDragHorizontal(e) {
+    
     thisSplitter = e.target;
     totalHeight = parseInt(document.defaultView.getComputedStyle(e.path[1]).height, 10);
+    /*myFamily: Above, Splitter, Below Divs*/
     myFamily = [];
     for (let i = 0; i < e.path[1].children.length; i++) {
         myFamily.push(e.path[1].children[i]);
@@ -39,19 +42,22 @@ function initDragHorizontal(e) {
     svPanelDivArr.forEach(panel => {
         svPanelDivHeightArr.push(parseInt(document.defaultView.getComputedStyle(panel).height,10));
     });
+    /*Dont allow other divs move together*/
     for(let i=0; i<svPanelDivArr.length;i++){
         svPanelDivArr[i].style.minHeight = svPanelDivHeightArr[i]*100/totalHeight + '%';
+        svPanelDivArr[i].style.pointerEvents = "none";
     }
+    
     e.path.forEach(element => {
         if(element.classList && element.classList.contains("container"))
             containerDiv = element;
     });
-    
     containerDivHeight = parseInt(document.defaultView.getComputedStyle(containerDiv).height,10);
     myPosition = myFamily.indexOf(thisSplitter);
     myAboveDiv = myFamily[myPosition - 1];
     myBelowDiv = myFamily[myPosition + 1];
     
+    /*My Splitter Group*/
     mySplitterFamily = []; 
     myFamily.forEach(family => {
         if(family.classList.contains("svSplitter") && family.classList.contains("svHorizontal"))
@@ -60,9 +66,10 @@ function initDragHorizontal(e) {
     mySplitterPosition = mySplitterFamily.indexOf(thisSplitter);
     // restSplitterBelowHeight = parseInt(document.defaultView.getComputedStyle(thisSplitter).height,10)*(mySplitterFamily.length-mySplitterPosition)+parseInt(document.defaultView.getComputedStyle(thisSplitter).height,10)/2;
     // restSplitterAboveHeight = parseInt(document.defaultView.getComputedStyle(thisSplitter).height,10)*(mySplitterPosition)+parseInt(document.defaultView.getComputedStyle(thisSplitter).height,10)/2;
-    
+    /*Splitter own heights*/
     restSplitterBelowHeight = parseInt(document.defaultView.getComputedStyle(thisSplitter).height,10)*(mySplitterFamily.length-mySplitterPosition-1);
     restSplitterAboveHeight = parseInt(document.defaultView.getComputedStyle(thisSplitter).height,10)*(mySplitterPosition);
+    
     if (e.type == "mousedown")
         startMouseY = e.clientY;
     if (e.type == "touchstart")
@@ -88,10 +95,11 @@ function doDragHorizontal(e) {
         myAboveDiv.style.minHeight = (startHeightAbove + e.touches[0].clientY - startTouchY)*100/(totalHeight) + '%';
         myBelowDiv.style.minHeight = (startHeightBelow - e.touches[0].clientY + startTouchY)*100/(totalHeight) + '%';
     }
-    // myAboveDiv.classList.remove("svPanel")
-    // myBelowDiv.classList.remove("svPanel")
 }
 function stopDragHorizontal(e) {
+    for(let i=0; i<svPanelDivArr.length;i++){
+        svPanelDivArr[i].style.pointerEvents = "auto";
+    }
     document.documentElement.removeEventListener('mousemove', doDragHorizontal, false);
     document.documentElement.removeEventListener('mouseup', stopDragHorizontal, false);
     document.documentElement.removeEventListener('touchmove', doDragHorizontal, false);
@@ -126,6 +134,7 @@ function initDragVertical(e) {
     
     for(let i=0; i<svColumnDivArr.length;i++){
         svColumnDivArr[i].style.minWidth = svColumnDivWidthArray[i]*100/totalWidth + '%';
+        svColumnDivArr[i].style.pointerEvents = "none";
     }
     
     e.path.forEach(element =>{
@@ -193,6 +202,9 @@ function doDragVertical(e) {
 
 }
 function stopDragVertical(e) {
+    for(let i=0; i<svColumnDivArr.length;i++){
+        svColumnDivArr[i].style.pointerEvents = "auto";
+    }
     document.documentElement.removeEventListener('mousemove', doDragVertical, false);
     document.documentElement.removeEventListener('mouseup', stopDragVertical, false);
     document.documentElement.removeEventListener('touchmove', doDragVertical, false);
